@@ -1,0 +1,10 @@
+@use "@/styles/mixins.scss" as *;
+
+.container {
+  margin: 0 auto;
+  width: 87%;
+
+  @media (min-width: 1500px) {
+    max-width: 1500px;
+  }
+}
