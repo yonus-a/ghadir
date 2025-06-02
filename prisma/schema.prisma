@@ -1,0 +1,40 @@
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model province {
+  id               Int                @id @default(autoincrement())
+  name             String             @db.Text
+  insertedId       String
+  updatedId        String?
+  createdAt        DateTime           @default(now()) @db.DateTime(0)
+  updatedAt        DateTime           @default(now()) @db.DateTime(0)
+  deleted          Int                @default(0)
+  province_archive province_archive[]
+
+  @@index([insertedId], map: "FK_province_insertedUser")
+  @@index([updatedId], map: "FK_province_updatedUser")
+  @@index([createdAt], map: "createdAt")
+  @@index([deleted], map: "deleted")
+}
+
+model province_archive {
+  id         Int      @id @default(autoincrement())
+  referId    Int
+  name       String   @db.Text
+  insertedId String
+  updatedId  String?
+  createdAt  DateTime @default(now()) @db.DateTime(0)
+  updatedAt  DateTime @default(now()) @db.DateTime(0)
+  deleted    Int      @default(0)
+  province   province @relation(fields: [referId], references: [id], onUpdate: Restrict, map: "FK_provinceArchive_main")
+
+  @@index([insertedId], map: "FK_provinceArchive_insertedUser")
+  @@index([referId], map: "FK_provinceArchive_main")
+  @@index([updatedId], map: "FK_provinceArchive_updatedUser")
+}

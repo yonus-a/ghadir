@@ -1,10 +1,12 @@
-import Form from "./components/form";
-import Container from "./components/general/container";
+import getProvince from "./server-actions/province/getProvince";
 import CountDown from "./components/general/countdown";
+import Container from "./components/general/container";
+import Form from "./components/form";
 import "./styles/page.scss";
 
-export default function Home() {
+export default async function Home() {
   const time = new Date("2025-06-14");
+  const province = await getProvince();
 
   return (
     <>
@@ -15,7 +17,7 @@ export default function Home() {
       </header>
       <main>
         <Container>
-          <Form />
+          <Form province={province} />
         </Container>
       </main>
     </>
